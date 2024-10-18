@@ -105,7 +105,7 @@ DATABASES = {
         'NAME': 'ecom_web',
         'USER': 'ecom_admin',
         'PASSWORD': 'ecomadmin@123',
-        'HOST': '127.0.0.1',  # Or your database server's IP
+        'HOST': 'localhost',  # Or '127.0.0.1'
         'PORT': '5432',       # Default PostgreSQL port
     }
 }

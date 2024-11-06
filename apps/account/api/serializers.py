@@ -30,8 +30,6 @@ class UsersLoginSerializer(serializers.Serializer):
             user = authenticate(email=email, password=password)
             if not user:
                 raise serializers.ValidationError(_('Invalid email or password.'))
-            if not user.is_superuser:
-                raise serializers.ValidationError(_('User is not an admin.'))
         else:
             raise serializers.ValidationError(_('Must include "email" and "password".'))
 

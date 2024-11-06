@@ -17,18 +17,12 @@ class AdminLoginSerializer(serializers.Serializer):
         if email and password:
             user = authenticate(email=email, password=password)
             if not user:
-                raise serializers.ValidationError(_('Invalid email or password.'))
-            if not user.is_superuser:
-                raise serializers.ValidationError(_('User is not an admin.'))
+                raise serializers.ValidationError('Invalid credentials')
+            data['user'] = user
         else:
-            raise serializers.ValidationError(_('Must include "email" and "password".'))
+            raise serializers.ValidationError('Email and password are required.')
 
-        refresh = RefreshToken.for_user(user)
-
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
+        return data
 
 
 

@@ -189,5 +189,5 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=45),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'FM03_EmployeeID',
+    'USER_ID_FIELD': 'id',
 }

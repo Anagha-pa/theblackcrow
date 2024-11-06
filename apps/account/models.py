@@ -22,8 +22,5 @@ class UserData(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  
 
-    class Meta:
-        db_table = 'account_user'
-
     def __str__(self):
         return self.email if self.email else "Unnamed data"

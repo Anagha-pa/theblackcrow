@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-class AdminLoginSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
 
@@ -16,13 +16,25 @@ class AdminLoginSerializer(serializers.Serializer):
 
         if email and password:
             user = authenticate(email=email, password=password)
-            if not user:
-                raise serializers.ValidationError('Invalid credentials')
+            if user is None:
+                raise serializers.ValidationError("Invalid email or password.")
+            
+            # Check if the user is active
+            if not user.is_active:
+                raise serializers.ValidationError("User account is disabled.")
+
+            # Attach the user to the serializer for access in views
             data['user'] = user
         else:
-            raise serializers.ValidationError('Email and password are required.')
-
+            raise serializers.ValidationError("Must include 'email' and 'password'.")
         return data
+
+    def get_tokens(self, user):
+        refresh = RefreshToken.for_user(user)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
 
 
 

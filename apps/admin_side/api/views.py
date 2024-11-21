@@ -34,14 +34,21 @@ class Sizeviewset(CustomModelViewset):
     serializer_class = SizeSerializer
 
 
+
 class ProductViewset(CustomModelViewset):
-    permission_classes = [IsSuperUser]
     queryset = Product.objects.all()
-    
+
     def get_serializer_class(self):
         if self.action in ['list', 'retrieve']:
             return ProductListSerializer
         return ProductSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            # Allow any user for list and retrieve
+            return [permission() for permission in [AllowAny]]
+        # Restrict other actions to authenticated users
+        return [permission() for permission in [IsAuthenticated]]
     
 
     

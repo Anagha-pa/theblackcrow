@@ -63,7 +63,5 @@ class ProductListSerializer(serializers.ModelSerializer):
     def get_Product_size(self, obj):
         if obj.Product_size:
             return {"id":obj.Product_size.id, "name":obj.Product_size.Product_size}
-        
 
-        
 
